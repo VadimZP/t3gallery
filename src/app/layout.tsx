@@ -1,16 +1,13 @@
 import "~/styles/globals.css";
+import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { TopNav } from "./_components/topnav";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 
 export const metadata: Metadata = {
   title: "T3 Gallery",
@@ -29,6 +26,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={`${geist.variable} flex flex-col gap-4`}>
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <header className="flex h-16 items-center justify-end gap-4 p-4">
           <TopNav />
         </header>
